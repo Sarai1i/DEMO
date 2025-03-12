@@ -11,19 +11,20 @@ const LoadingPage = () => {
       try {
         const response = await axios.get(`${API_BASE_URL}/processing_status`);
         console.log("📡 حالة المعالجة الحالية:", response.data.status);
-
+  
         if (response.data.status === "done") {
-          console.log("✅ OCR اكتمل! التوجيه إلى /review");
+          console.log("✅ OCR اكتمل! التوجيه إلى /correction-choice");
           clearInterval(checkProcessingStatus);
-          navigate("/review");
+          navigate("/correction-choice"); // ✅ تعديل التوجيه
         }
       } catch (error) {
         console.error("❌ خطأ أثناء التحقق من حالة المعالجة:", error);
       }
     }, 3000);
-
+  
     return () => clearInterval(checkProcessingStatus);
   }, [navigate]);
+  
 
   return (
     <div style={styles.page}>

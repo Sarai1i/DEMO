@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700&display=swap');
+
+
 .App {
   text-align: center;
 }
@@ -40,8 +43,13 @@
 
 
 body {
-  font-family: "Lama Sans", sans-serif !important;
-  background-color: white !important; /* يجعل الخلفية بيضاء تمامًا */
+  font-family: 'Tajawal', sans-serif !important;
+  font-weight: 400;
+  text-align: right;
+}
+
+h1, h2, h3, h4, h5, h6, p, button, a, span, input, textarea {
+  font-family: 'Tajawal', sans-serif !important;
 }
 
 @keyframes gradientAnimation {
@@ -337,4 +345,209 @@ body {
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-10px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+/* ✅ خلفية صفحة اختيار التصحيح، بنفس تقسيم صفحة الرفع */
+.choice-page {
+  background: white;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+}
+
+/* ✅ تدرج الخلفية العلوية مثل صفحة الرفع */
+.choice-page::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  background: linear-gradient(-45deg, #0A192F, #1B2A4E, #375991, #0A192F);
+  background-size: 300% 300%;
+  animation: gradientAnimation 10s ease infinite;
+  z-index: 0;
+}
+
+/* ✅ نفس تصميم صندوق رفع الملفات */
+.choice-box-container {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  max-width: 450px;
+  z-index: 2;
+}
+
+/* ✅ تنسيق النص */
+.choice-box-title {
+  font-size: 22px;
+  font-weight: bold;
+  color: #1B2A4E;
+  margin-bottom: 10px;
+}
+
+.choice-box-description {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+/* ✅ تنسيق الأزرار */
+.choice-btn {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+  border: none;
+  background-color: #404a64d9; /* كحلي داكن */
+  color: white; /* لون النص أبيض */
+}
+
+.choice-btn:hover {
+  background-color: #23395D; /* لون أفتح عند التحويم */
+}
+
+
+.processing-container {
+  background: white;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+}
+
+.processing-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  background: linear-gradient(-45deg, #0A192F, #1B2A4E, #375991, #0A192F);
+  background-size: 300% 300%;
+  animation: gradientAnimation 10s ease infinite;
+  z-index: 0;
+}
+
+.processing-box {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  max-width: 450px;
+  z-index: 2;
+}
+
+.processing-box h2 {
+  font-size: 22px;
+  font-weight: bold;
+  color: #1B2A4E;
+  margin-bottom: 10px;
+}
+
+.processing-box p {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+/* لودر متحرك */
+/* ✅ تحسين اللودر ليكون مثل تحميل الملف */
+.loader {
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #1B2A4E;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite; /* ✅ إصلاح الحركة */
+  margin: auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ✅ خلفية صفحة التنزيل مثل باقي الصفحات */
+.download-container {
+  background: white;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+}
+
+.download-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  background: linear-gradient(-45deg, #0A192F, #1B2A4E, #375991, #0A192F);
+  background-size: 300% 300%;
+  animation: gradientAnimation 10s ease infinite;
+  z-index: 0;
+}
+
+/* ✅ تحسين شكل الصندوق */
+.download-box {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  max-width: 450px;
+  z-index: 2;
+}
+
+/* ✅ تحسين العناوين */
+.download-title {
+  font-size: 22px;
+  font-weight: bold;
+  color: #1B2A4E;
+  margin-bottom: 10px;
+}
+
+.download-description {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+/* ✅ تحسين زر التنزيل */
+.download-btn {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+  border: none;
+  background-color: #404a64d9;
+  color: white;
+}
+
+.download-btn:hover {
+  background-color: #23395D;
 }

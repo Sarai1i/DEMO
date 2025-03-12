@@ -255,7 +255,7 @@ const ReviewPage = () => {
           <div style={{ position: "relative" }}>
             <img
               ref={imageRef}
-              src={`${API_BASE_URL}/uploads/original_page_${currentPage + 1}.png`}
+              src={`${API_BASE_URL}/uploads/original_page_${currentPage + 1}.png?t=${new Date().getTime()}`}
               alt="الملف الأصلي"
               style={styles.image}
             />

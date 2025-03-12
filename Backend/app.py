@@ -21,9 +21,6 @@ model = genai.GenerativeModel("gemini-2.0-flash")
 
 app.secret_key = "super_secret_key_123"
 
-
-
-
 # تكوين Tesseract
 TESSERACT_PATH = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 configure_tesseract(TESSERACT_PATH)
@@ -48,12 +45,10 @@ CORPUS_FILTER_API_URL = "http://127.0.0.1:9090/correct"
 
 # تكوين MongoDB
 
-MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017/ocr_database")
-client = MongoClient(MONGO_URI)
+# الاتصال بقاعدة البيانات
+client = MongoClient("mongodb://localhost:27017/")
 db = client["ocr_database"]
 fs = gridfs.GridFS(db)  # GridFS لتخزين الملفات الكبيرة
-
-
 
 files_collection = db["files"]
 corrected_words_collection = db["corrected_words"]  # مجموعة الكلمات المصححة
@@ -179,23 +174,25 @@ def process_ocr(file_entry):
 
     print(f"📂 تحميل الملف من GridFS: {file_entry['filename']}")
 
-    # تشغيل OCR
+    # تشغيل OCR وتحديث `ocr_results`
     ocr_results = ocr_with_highlighting(temp_file_path, UPLOAD_FOLDER)
 
-    # ✅ تحويل النص المستخرج إلى ملف نصي
-    ocr_text = "\n".join([" ".join([word["word"] for word in page["text"]]) for page in ocr_results])
+    # ✅ **تأكد من عدم احتواء `ocr_results` على بيانات غير صحيحة**
+    if not ocr_results or not isinstance(ocr_results, list) or len(ocr_results) == 0:
+        print("❌ خطأ: لم يتم استخراج أي نصوص صحيحة!")
+        return
 
-    # 🔹 حفظ النص كملف OCR داخل GridFS
+    # 🔹 تحديث قاعدة البيانات وربط نتائج OCR بالملف الأصلي
+    ocr_text = "\n".join([" ".join([word["word"] for word in page["text"]]) for page in ocr_results])
     ocr_file_id = fs.put(ocr_text.encode("utf-8"), filename=f"ocr_{file_entry['filename']}.txt")
 
-    # 🔹 تحديث قاعدة البيانات وربط ملف OCR بالملف الأصلي
     files_collection.update_one(
         {"_id": file_entry["_id"]},
         {"$set": {"ocr_file_id": ocr_file_id, "ocr_results": ocr_results}}
     )
 
     processing_complete = True
-    print(f"✅ OCR تم بنجاح، ID: {ocr_file_id} مرتبط بالملف الأصلي ID: {file_id}")
+    print(f"✅ OCR تم بنجاح، تم تحديث `ocr_results` وأضيف إلى قاعدة البيانات.")
 
 
 @app.route("/review", methods=["GET"])

@@ -111,7 +111,7 @@ def ocr_with_highlighting(pdf_path, upload_folder, confidence_threshold=80):
             data = pytesseract.image_to_data(
                 Image.fromarray(binary_image),
                 output_type=pytesseract.Output.DICT,
-                lang="ara+eng"
+                lang="ara"
             )
 
             # إنشاء نسخة من الصورة مع الكلمات منخفضة الثقة المظللة
